@@ -17,11 +17,19 @@ function! rainbow#enable() abort
         let g:rainbow_colors = ( &background == "dark"? g:rainbow_colors_black : g:rainbow_colors_color )
 	if len(w:ms) == 0
 		let groups = []
-		for color in g:rainbow_colors
+        let colorIndex = 0
+        let colorLen = (exists("g:rainbow_colors_gui") ? len(g:rainbow_colors_gui) : len(g:rainbow_colors))
+        while colorIndex < colorLen
+		" for color in g:rainbow_colors
+            let color = g:rainbow_colors[colorIndex]
 			let group = "colorgroup_".color
-			execute "hi ".group." ctermbg=".color
+            let guisetting = (exists("g:rainbow_colors_gui") ? "guibg=".g:rainbow_colors_gui[colorIndex] : "")
+            execute "hi ".group." guifg=NONE ctermfg=NONE ".guisetting." ctermbg=".color." gui=NONE cterm=NONE"
 			call add(groups, group)
-		endfor
+
+            let colorIndex += 1
+		" endfor
+      endwhile
 		let level = 0
 		let maxlevel = 40
 		let tab_pat = "\\zs\t\\ze"

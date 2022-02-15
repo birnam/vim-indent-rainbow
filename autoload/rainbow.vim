@@ -21,7 +21,7 @@ function! rainbow#enable() abort
         let colorLen = (exists("g:rainbow_colors_gui") ? len(g:rainbow_colors_gui) : len(g:rainbow_colors))
         while colorIndex < colorLen
 		" for color in g:rainbow_colors
-            let color = g:rainbow_colors[colorIndex]
+            let color = g:rainbow_colors[colorIndex % len(g:rainbow_colors)]
 			let group = "colorgroup_".color
             let guisetting = (exists("g:rainbow_colors_gui") ? "guibg=".g:rainbow_colors_gui[colorIndex] : "")
             execute "hi ".group." guifg=NONE ctermfg=NONE ".guisetting." ctermbg=".color." gui=NONE cterm=NONE"
